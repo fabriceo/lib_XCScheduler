@@ -1,0 +1,18 @@
+VERSION = 2.0.0
+
+MODULE_XCC_FLAGS = $(XCC_FLAGS)
+
+DEPENDENT_MODULES =
+ 
+OPTIONAL_HEADERS +=
+
+EXPORT_INCLUDE_DIRS = api
+
+INCLUDE_DIRS = $(EXPORT_INCLUDE_DIRS)
+
+SOURCE_DIRS = src examples
+
+#this file is an example with main() function and then should be exclude from module compilation
+#but it can be used from an application folder by simply including it in a dummy main.xc file.
+
+EXCLUDE_FILES += lib_XCscheduler_1.xc 
