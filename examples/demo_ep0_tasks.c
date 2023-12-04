@@ -21,6 +21,7 @@
 #endif
 
 #include "XCscheduler.h"
+#include "XCgettime.h"
 
 // hard code for accessing port ressource, "a" is the port ressource adresse defined in XS1.h
 #define setc(a,b)    {__asm__ __volatile__("setc res[%0], %1": : "r" (a) , "r" (b));}
@@ -59,17 +60,17 @@ void ep0_task2(){
         leds |= buttons;
         leds ^= 8;  //switch led3
         portout( pleds, leds ^ mask );
-        yieldDelay(10000000);   //100ms
+        yield_milliseconds(100);
     }
 }
 
 
 void ep0_task1(){
     for (int i=0; i<10; i++) {
-        xprintf("hello world ep0_task1 %d\n",i);
-        yieldDelay(100000000);  //1sec
+        xprintf("%lld hello world ep0_task1 %d\n",XCmillis(),i);
+        yield_milliseconds(1000);  //1sec
     }
-    xprintf("ep0_task1 ends : stop borring with prints\n");
+    xprintf("ep0_task1 ends after 10 borring prints\n");
 }
 
 
@@ -79,7 +80,7 @@ void XUD_UserYieldChanend( unsigned ch ) {
     if ( task_created == 0 ) {
         XCSchedulerCreateTask(ep0_task1);
         XCSchedulerCreateTask(ep0_task2);
-        xprintf("2 tasks created\n");
+        xprintf("%lld 2 tasks created\n",XCmillis());
         task_created = 1;
     } else
         yieldChanend(ch);

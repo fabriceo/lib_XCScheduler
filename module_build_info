@@ -1,6 +1,10 @@
-VERSION = 2.0.0
+VERSION = 2.0.1
+#basic history:
+#2.0.1 added yield_microseconds, yield_milliseconds, yield_seconds, and correcting XCgetTime()
+#2.0.0 initial release
 
-MODULE_XCC_FLAGS = $(XCC_FLAGS)
+
+MODULE_XCC_FLAGS = $(XCC_FLAGS) -O3
 
 DEPENDENT_MODULES =
  
@@ -12,7 +16,6 @@ INCLUDE_DIRS = $(EXPORT_INCLUDE_DIRS)
 
 SOURCE_DIRS = src examples
 
-#this file is an example with main() function and then should be exclude from module compilation
-#but it can be used from an application folder by simply including it in a dummy main.xc file.
+#the example files can be excluded from compilation if they interract with application
 
-EXCLUDE_FILES += lib_XCscheduler_1.xc 
+EXCLUDE_FILES += lib_XCscheduler_1.xc #demo_ep0_tasks.c

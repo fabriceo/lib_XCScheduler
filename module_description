@@ -31,7 +31,9 @@ remark:
  or remove it from the EXCLUDE_FILES line in the module_build_info file.
  
  file demo_ep0_tasks is a proof of concept able to reuse cpu time from Endpoint0 in an usb application.
- to make it work , it is mandatory to add a function call to XUD_UserYieldChanend(ch) before all the "testct" statement from XUD_EpFunctions.c
+ To make it work , it is mandatory to add a function call to XUD_UserYieldChanend(ch) before the "testct" statement 
+ in the function XUD_GetSetupBuffer from XUD_EpFunctions.c
  see this post: https://www.xcore.com/viewtopic.php?p=40481#p40481
- it can be removed from module compilation, either by removing examples in the line SOURCE_DIRS or adding it in EXCLUDE_FILES from module_build_info
+ It can be removed from module compilation, either by removing "examples" in the line SOURCE_DIRS 
+ or adding it in EXCLUDE_FILES from module_build_info
  

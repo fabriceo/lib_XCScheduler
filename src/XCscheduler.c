@@ -41,7 +41,7 @@ unsigned XCSchedulerCreate(const unsigned taskAddress, const unsigned stackSize,
             //initialize main task to point on itself
             thread->main = thread->current = tcb->next = tcb->prev = tcb;
             tcb->param = tcb->pc = 0; tcb->name = "main";
-            XCS_printf("main creation @ %x = %d\n",(unsigned)thread->main,(unsigned)thread->main);
+            XCS_printf("%d main creation @ %x = %d\n",XCS_GET_TIME(),(unsigned)thread->main,(unsigned)thread->main);
     }
     //convert stacksize to bytes and add tcb size
     int alloc = (stackSize+1) * 4 + sizeof(task_t);
@@ -58,7 +58,7 @@ unsigned XCSchedulerCreate(const unsigned taskAddress, const unsigned stackSize,
     //compute top of the stack address, pointing on the last word allocated
     int SP = (unsigned)tcb + alloc;
     tcb->sp = SP & ~7;   //force allignement 8. this may reduce SP by one but alloc includs one more
-    XCS_printf("create %s, tcb @ %x = %d\n",tcb->name,(unsigned)tcb,(unsigned)tcb);
+    XCS_printf("%d create %s, tcb @ %x = %d\n",XCS_GET_TIME(),tcb->name,(unsigned)tcb,(unsigned)tcb);
     return (unsigned)tcb;
 }
 
@@ -70,12 +70,13 @@ unsigned XCSchedulerYieldDelay(const int max) {
     return res;
 }
 
-unsigned XCSchedulerYieldChanend(unsigned ch) {
-    unsigned res;
-    while (!XCStestChan(ch)) res = XCSchedulerYield();
-    return res;
+void XCSchedulerYieldChanend(unsigned ch) {
+    while (!XCStestChan(ch)) XCSchedulerYield();
 }
 
 inline unsigned yield();
 inline unsigned yieldDelay(const int max);
-inline unsigned yieldChanend(unsigned ch);
+inline unsigned yield_microseconds(const int us);
+inline unsigned yield_milliseconds(const int ms);
+inline unsigned yield_seconds(const int s);
+inline void yieldChanend(unsigned ch);

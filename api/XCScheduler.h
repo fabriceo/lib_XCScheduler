@@ -57,7 +57,7 @@ unsigned XCSchedulerYield();
 //switch to the next task into the list during max cpucycles
 unsigned XCSchedulerYieldDelay(const int max);
 //switch to the next task into the list while no data or token presence in a channel
-unsigned XCSchedulerYieldChanend(unsigned ch);
+void XCSchedulerYieldChanend(unsigned ch);
 
 #ifdef __cplusplus
 }
@@ -67,6 +67,9 @@ unsigned XCSchedulerYieldChanend(unsigned ch);
 //shortcuts
 static inline unsigned yield()                   {  return XCSchedulerYield(); }
 static inline unsigned yieldDelay(const int max) {  return XCSchedulerYieldDelay(max); }
+static inline unsigned yield_milliseconds(const int ms) { return XCSchedulerYieldDelay(ms*100000); }
+static inline unsigned yield_microseconds(const int us) { return XCSchedulerYieldDelay(us*100); }
+static inline unsigned yield_seconds(const int s) { return XCSchedulerYieldDelay(s*100000000); }
 
 // helpers function related to global timer.
 // typical usage for doing something during 100us would be:
@@ -96,13 +99,12 @@ static inline unsigned XCStestChan(unsigned ch)
 
 #ifdef __XC__
 static inline unsigned XCStestStreamingChanend( streaming chanend ch ) { unsafe { return XCStestChan((unsigned)ch); } }
-    //unsigned uch; asm ("mov %0,%1":"=r"(uch):"r"(ch)); return XCStestChan(uch); }
 static inline unsigned XCStestChanend( chanend ch ) { unsafe { return XCStestChan((unsigned)ch); } }
-static inline unsigned yieldStreamingChanend( streaming chanend ch ) { return XCSchedulerYieldChanend(ch); }
-static inline unsigned yieldChanend( chanend ch )  {  return XCSchedulerYieldChanend(ch); }
+static inline void yieldStreamingChanend( streaming chanend ch ) { unsafe {  XCSchedulerYieldChanend((unsigned)ch);} }
+static inline void yieldChanend( chanend ch )  {  unsafe { XCSchedulerYieldChanend((unsigned)ch);} }
 #else
 #define XCStestStreamingChanend( _ch )  XCStestChan( _ch )
 #define XCStestChanend( _ch )           XCStestChan( _ch )
-static inline unsigned yieldChanend(unsigned ch) { return XCSchedulerYieldChanend(ch); }
+static inline void yieldChanend(unsigned ch) { return XCSchedulerYieldChanend(ch); }
 #endif
 
