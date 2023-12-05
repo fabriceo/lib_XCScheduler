@@ -1,11 +1,9 @@
 /**
  * @file XCScheduler.h
-
- *
- * @version XMOS 2.0 by fabriceo https://github.com/fabriceo
  *
  * @section License
  * Copyright (C) 2023, fabrice oudert
+ * https://github.com/fabriceo
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

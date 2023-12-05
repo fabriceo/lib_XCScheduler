@@ -1,5 +1,5 @@
 VERSION = 2.0.1
-#basic history:
+#### basic history: ####
 #2.0.1 added yield_microseconds, yield_milliseconds, yield_seconds, and correcting XCgetTime()
 #2.0.0 initial release
 
@@ -14,8 +14,7 @@ EXPORT_INCLUDE_DIRS = api
 
 INCLUDE_DIRS = $(EXPORT_INCLUDE_DIRS)
 
-SOURCE_DIRS = src examples
-
 #the example files can be excluded from compilation if they interract with application
+SOURCE_DIRS = src examples
 
 EXCLUDE_FILES += lib_XCscheduler_1.xc #demo_ep0_tasks.c
