@@ -23,6 +23,8 @@
 .*.*.swp
 *.swo
 *.todo
-org.eclipse.cdt.core.prefs
-xsim.args
 *.bak
+*.a
+*.*~
+*~
+*.class
